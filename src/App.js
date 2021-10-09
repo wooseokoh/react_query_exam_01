@@ -13,7 +13,7 @@ function App() {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div>
+    <div className='bg-red-100'>
       <ul>
         {data.data.movies.map((movie) => (
           <li>
