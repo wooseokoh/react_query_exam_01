@@ -1,8 +1,9 @@
+import React from "react";
 import { useQuery } from "react-query";
 
 function App() {
-  const { isLoading, error, data } = useQuery("repoData", () =>
-    fetch("https://api.github.com/repos/tannerlinsley/react-query").then(
+  const { isLoading, error, data } = useQuery("movieList", () =>
+    fetch("https://yts.mx/api/v2/list_movies.json?with_images=true").then(
       (res) => res.json()
     )
   );
@@ -13,11 +14,20 @@ function App() {
 
   return (
     <div>
-      <h1>{data.name}</h1>
-      <p>{data.description}</p>
-      <strong>👀 {data.subscribers_count}</strong>{" "}
-      <strong>✨ {data.stargazers_count}</strong>{" "}
-      <strong>🍴 {data.forks_count}</strong>
+      <ul>
+        {data.data.movies.map((movie) => (
+          <li>
+            <h1>제목 : {movie.title_long}</h1>
+            <ul>
+              <li>번호 : {movie.id}</li>
+              <li>장르 : {movie.genres}</li>
+              <li>상영시간 : {movie.runtime}분</li>
+              <li>줄거리 : {movie.summary}</li>
+            </ul>
+            <img src={movie.large_cover_image} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
